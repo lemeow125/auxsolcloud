@@ -1,0 +1,35 @@
+{
+    "code": "AWX-0000",
+    "msg": null,
+    "data": {
+        "deptId": null,
+        "energyData": {
+            "flh": null,
+            "power": 0.0,
+            "y": 0.0,
+            "earn": -0.78,
+            "yt": 2.58,
+            "earnT": 69.68,
+            "ym": 1.39,
+            "earnM": 69.68,
+            "yy": 1.4,
+            "earnY": 69.68,
+            "co2": 1.23,
+            "treePlants": 0.0,
+            "stringNum": null,
+            "pvList": null,
+            "acCouplingPower": null,
+            "acCouplingYieldDay": null,
+            "acCouplingYieldMonth": null,
+            "acCouplingYieldYear": null,
+            "acCouplingYieldTotal": null,
+            "multiInverterYieldDay": null,
+            "multiInverterYieldMonth": null,
+            "multiInverterYieldYear": null,
+            "multiInverterYieldTotal": null,
+            "multiInverterYieldPower": null
+        },
+        "capacity": 6.00,
+        "moneyUnit": "PHP"
+    }
+}

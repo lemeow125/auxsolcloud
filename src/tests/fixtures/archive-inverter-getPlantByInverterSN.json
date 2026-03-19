@@ -1,0 +1,48 @@
+{
+    "code": "AWX-0000",
+    "msg": null,
+    "data": {
+        "plantId": 0,
+        "deptId": 0,
+        "plantName": "INVERTER-TEST",
+        "plantType": "1",
+        "capacity": 6.000,
+        "latitude": 0,
+        "longitude": 0,
+        "address": "REDACTED",
+        "adminiRegions": [
+            "REDACTED",
+            "REDACTED",
+            "REDACTED"
+        ],
+        "regions": "REDACTED,REDACTED,REDACTED",
+        "isStorage": null,
+        "owner": null,
+        "installPhone": "REDACTED",
+        "installEmail": null,
+        "componentsAmount": null,
+        "investmentType": null,
+        "timeZone": "+08:00",
+        "dstTime": null,
+        "extendColumn": null,
+        "tariff": {
+            "planId": 0,
+            "plantId": 0,
+            "priceDirection": "01",
+            "priceType": "2",
+            "fixPrice": 13.0000,
+            "priceUom": "108",
+            "timeUsePrice": "{\\"price\\":[{\\"startDate\\":\\"01-01\\",\\"endDate\\":\\"12-31\\",\\"timeRanges\\":[{\\"startTime\\":\\"00: 00\\",\\"endTime\\":\\"24: 00\\",\\"price\\":\\"13\\"}]}],\\"buyPrice\\":[{\\"startDate\\":\\"01-01\\",\\"endDate\\":\\"12-31\\",\\"timeRanges\\":[{\\"startTime\\":\\"00: 00\\",\\"endTime\\":\\"24: 00\\",\\"price\\":\\"13\\"}]}]}",
+            "updateHistoryEarn": null,
+            "updateHistoryEarnDate": null
+        },
+        "createBy": null,
+        "createTime": "2026-03-19 14:19:04",
+        "updateBy": null,
+        "gridTime": null,
+        "updateTime": null,
+        "gatewayType": null,
+        "status": null,
+        "contactPerson": null
+    }
+}
