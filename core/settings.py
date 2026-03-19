@@ -18,7 +18,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key')
 # Render'da DEBUG'ni False qilish tavsiya etiladi
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*'] # Render uchun barcha hostlarga ruxsat beramiz
+ALLOWED_HOSTS = ['*']  # Render uchun barcha hostlarga ruxsat beramiz
 
 # --- ILOVALAR ---
 INSTALLED_APPS = [
@@ -35,7 +35,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Statik fayllar uchun
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Statik fayllar uchun
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -63,15 +63,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# --- MA'LUMOTLAR BAZASI (RENDER UCHUN) ---
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
-        conn_max_age=600
-    )
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
 
-# --- PAROL VA VAQT ---
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -80,7 +78,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Asia/Tashkent'
+TIME_ZONE = 'Asia/Manila'
 USE_I18N = True
 USE_TZ = True
 
@@ -103,9 +101,9 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 
 # --- BEAT SCHEDULER ---
 CELERY_BEAT_SCHEDULE = {
-    'sync-solar-every-5-min': {
+    'sync-solar-every-min': {
         'task': 'auxsol_app.tasks.sync_solar_data',
-        'schedule': crontab(minute='*/5'),
+        'schedule': crontab(minute='*'),
     },
     'cleanup-old-data-daily': {
         'task': 'auxsol_app.tasks.cleanup_old_data',
