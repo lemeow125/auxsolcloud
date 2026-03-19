@@ -168,3 +168,5 @@ uploads/
 static/
 TODO.md
 schema.yml
+
+pg_data
