@@ -2,6 +2,7 @@ from celery import shared_task
 from .services.client import AuxsolClient
 from .models import InverterData
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -10,7 +11,7 @@ logger = logging.getLogger(__name__)
 def sync_solar_data():
     client = AuxsolClient()
     if client.login():
-        res = client.get_solar_data(12973)
+        res = client.get_solar_data(os.getenv("AUXSOL_PLANT_ID"))
         if res and res.get("code") == "AWX-0000":
             data = res.get("data", {})
             energy = data.get("energyData", {})
