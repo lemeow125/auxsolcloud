@@ -1,3 +1,10 @@
+from django.shortcuts import render
+from rest_framework import status
+from .models import Inverter
+from .serializers import InverterSerializer
+from rest_framework import viewsets
+from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -70,3 +77,28 @@ def get_inverter(request):
             raise Exception(f"Request Failed: {res}")
     except Exception as e:
         return Response({"error": str(e)}, status=500)
+
+
+class InverterViewSet(viewsets.ModelViewSet):
+    """Model Viewset for Inverter"""
+    serializer_class = InverterSerializer
+    permission_classes = [IsAuthenticated]
+    http_method_names = ['get', 'post']
+    queryset = Inverter.objects.all()
+
+    def get_queryset(self):
+        user = self.request.user
+        inverters = Inverter.objects.filter(owner=user).first()
+        return inverters
+
+    def get_object(self):
+        user = self.request.user
+
+        obj = super().get_object()
+
+        if obj.owner != user:
+            raise PermissionDenied(
+                "You are not allowed to view this resource"
+            )
+        else:
+            return obj
