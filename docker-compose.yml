@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   db:
@@ -9,7 +9,7 @@ services:
       - POSTGRES_USER=farrukh
       - POSTGRES_PASSWORD=farrukh711
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./pg_data:/var/lib/postgresql/data
     # Agar 5432 band bo'lsa, chap tomondagini "5433:5432" qiling
     ports:
       - "5432:5432"
@@ -61,6 +61,3 @@ services:
       - db
       - redis
       - web
-
-volumes:
-  postgres_data:
