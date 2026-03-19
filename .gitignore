@@ -170,3 +170,7 @@ TODO.md
 schema.yml
 
 pg_data
+celerybeat-schedule
+celerybeat-schedule-schm
+celerybeat-schedule-wal
+celerybeat-schedule-*
