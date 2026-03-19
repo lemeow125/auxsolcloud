@@ -62,8 +62,8 @@ class Analytics:
             response = self.session.get(url, timeout=15)
             return response.json()
         except Exception as e:
-            print(f"🔥 Data Error: {e}")
-            return None
+            logger.error(e)
+            raise
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=2, max=15))
     def get_inverter_report(self):
@@ -72,8 +72,8 @@ class Analytics:
             response = self.session.get(url, timeout=15)
             return response.json()
         except Exception as e:
-            print(f"🔥 Data Error: {e}")
-            return None
+            logger.error(e)
+            raise
 
 
 class Inverter:
@@ -92,5 +92,5 @@ class Inverter:
             response = self.session.get(url, timeout=15)
             return response.json()
         except Exception as e:
-            print(f"🔥 Data Error: {e}")
-            return None
+            logger.error(e)
+            raise
