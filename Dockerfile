@@ -1,25 +1,41 @@
-FROM python:3.13-slim
+
+# Stage 1: Builder
+FROM ghcr.io/astral-sh/uv:python3.13-trixie-slim AS builder
+
+# UV Caching
+ENV UV_LINK_MODE=copy
+ENV UV_CACHE_DIR=/tmp/.uv
 
 WORKDIR /app
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+# Copy dependency management files
+# (Only pyproject.toml and uv.lock file is needed to replicate the environment))
+COPY pyproject.toml uv.lock /app/
 
-# Tizim paketlarini o'rnatish
-RUN apt-get update && apt-get install -y libpq-dev gcc && rm -rf /var/lib/apt/lists/*
+# Use uv to install all project dependenies in a virtual environment
+RUN --mount=type=cache,target=/tmp/.uv \ 
+    uv sync --frozen --compile-bytecode
 
-# Kutubxonalarni o'rnatish
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
 
-# Loyiha kodini nusxalash
-COPY . .
+# Stage 2: Runtime
+FROM python:3.13.7-slim AS runtime
 
-# start.sh fayliga bajarish ruxsatini berish
-RUN chmod +x start.sh
+# Environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 
-# Portni ochish (Render odatda 10000 ni kutadi, lekin biz 8001 qoldiramiz)
-EXPOSE 8001
+WORKDIR /app
 
-# Konteyner ishga tushganda skriptni bajarish
-CMD ["./start.sh"]
+# Copy the virtual environment from the builder stage
+COPY --from=builder /app /app
+
+# Add the virtual environment’s binary directory to PATH
+ENV PATH="/app/.venv/bin:$PATH"
+
+# Copy project files
+COPY . /app/
+RUN chmod +x /app/.docker/start.sh
+
+# Expose Django's default port
+EXPOSE 8000
+
+ENTRYPOINT [ "/app/.docker/start.sh" ]

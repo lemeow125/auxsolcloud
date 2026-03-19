@@ -1,47 +1,25 @@
-version: "3.8"
-
 services:
+  # API
+  api:
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: git.06222001.xyz/keannu125/auxsolcloud:latest
+    restart: always
+    ports:
+      - "${BACKEND_PORT}:8000"
+    environment:
+      - RUN_TYPE=api
+    volumes:
+      - ./src/static:/app/src/static # Bind mount for persistent static files
+    depends_on:
+      - redis
+
+  # Cache
   redis:
-    image: redis:alpine
-    container_name: solis_redis
-    ports:
-      - "6379:6379"
-
-  web:
-    build: .
-    container_name: solis_web
-    command: >
-      sh -c "python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8001"
-    volumes:
-      - .:/app
-    ports:
-      - "8001:8001"
-    env_file:
-      - .env
-    depends_on:
-      - redis
-
-  worker:
-    build: .
-    container_name: solis_worker
-    command: celery -A core worker -l info
-    volumes:
-      - .:/app
-    env_file:
-      - .env
-    depends_on:
-      - redis
-      - web
-
-  beat:
-    build: .
-    container_name: solis_beat
-    command: celery -A core beat -l info
-    volumes:
-      - .:/app
-    env_file:
-      - .env
-    depends_on:
-      - redis
-      - web
+    env_file: .env
+    image: redis:latest
+    restart: always
+    environment:
+      - REDIS_PASSWORD=${CACHE_PASSWORD}
